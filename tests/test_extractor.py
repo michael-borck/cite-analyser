@@ -55,3 +55,42 @@ def test_parses_doi_and_year_suffix():
     assert ref["doi"] == "10.1234/abcde"
     assert ref["year"] == 2023
     assert ref["yearSuffix"] == "a"
+
+
+def test_analyze_mirrors_reference_analysis_result():
+    """The analyse() block mirrors cite-sight's ReferenceAnalysisResult so the
+    frozen server can delegate without an adapter guessing field names."""
+    from cite_analyser.analysis import analyze
+
+    result = analyze(APA_ESSAY)
+    assert result["totalReferences"] == 3
+    assert result["detectedStyle"] == "apa"
+    assert result["verifications"] == []  # verification is opt-in
+    for key in (
+        "verifiedCount",
+        "suspiciousCount",
+        "notFoundCount",
+        "unverifiedCount",
+        "brokenUrlCount",
+    ):
+        assert result[key] == 0
+    assert result["inTextCheckSkipped"] is False
+    assert result["sourceListLikely"] is False
+
+
+def test_analyze_skips_cross_reference_when_asked():
+    from cite_analyser.analysis import analyze
+
+    result = analyze(APA_ESSAY, check_in_text=False)
+    assert result["inTextCheckSkipped"] is True
+    assert result["crossReference"] == {
+        "unmatchedBibliography": [],
+        "unmatchedInText": [],
+    }
+
+
+def test_reference_list_document_type_skips_in_text_check():
+    from cite_analyser.analysis import analyze
+
+    result = analyze(APA_ESSAY, document_type="reference-list")
+    assert result["inTextCheckSkipped"] is True

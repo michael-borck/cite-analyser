@@ -39,11 +39,17 @@ async def analyse(
     mailto: str = Form(default=""),
     checkUrls: bool = Form(default=True),
     checkDoi: bool = Form(default=True),
+    checkInText: bool = Form(default=True),
+    citationStyle: str = Form(default="auto"),
+    documentType: str = Form(default=""),
     semanticScholarApiKey: str = Form(default=""),
     openAlexApiKey: str = Form(default=""),
 ) -> dict[str, Any]:
-    """Extract references and in-text citations; optionally verify them
-    against external academic databases."""
+    """Analyse a document: references, in-text citations, cross-reference,
+    duplicates, format issues, and (when verify=true) database verdicts.
+
+    Response keys mirror cite-sight's AnalysisResult.references block plus the
+    extracted text, so the frozen engine's server can delegate wholesale."""
     name = file.filename or "document.txt"
     raw = await file.read()
     try:
@@ -58,5 +64,8 @@ async def analyse(
         check_doi=checkDoi,
         semantic_scholar_api_key=semanticScholarApiKey or None,
         openalex_api_key=openAlexApiKey or None,
+        citation_style=citationStyle if citationStyle in ("auto", "apa", "mla", "chicago") else "auto",
+        check_in_text=checkInText,
+        document_type=documentType or None,
     )
-    return {"fileName": name, **result}
+    return {"fileName": name, "extractedText": text, **result}
