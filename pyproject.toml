@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cite-analyser"
-version = "0.2.1"
+version = "0.2.2"
 description = "Citation extraction, reference verification, and in-text cross-checking — the Python successor to the cite-sight engine"
 readme = "README.md"
 requires-python = ">=3.11"

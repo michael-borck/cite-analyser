@@ -64,7 +64,9 @@ async def analyse(
         check_doi=checkDoi,
         semantic_scholar_api_key=semanticScholarApiKey or None,
         openalex_api_key=openAlexApiKey or None,
-        citation_style=citationStyle if citationStyle in ("auto", "apa", "mla", "chicago") else "auto",
+        citation_style=citationStyle
+        if citationStyle in ("auto", "apa", "mla", "chicago")
+        else "auto",
         check_in_text=checkInText,
         document_type=documentType or None,
     )

@@ -111,11 +111,12 @@ def _assess_academic_match(
         and title_token_conflict(ref["title"], matched["title"])
     ):
         flags.append("title_token_mismatch")
-    if doi_had_metadata or not doi_resolved:
-        if "title_token_mismatch" in flags or author == "mismatch":
-            if doi_resolved and title_sim < 0.7:
-                flags.append("doi_title_mismatch")
-            return {"status": "suspicious", "confidence": 0.35, "flags": flags}
+    if (doi_had_metadata or not doi_resolved) and (
+        "title_token_mismatch" in flags or author == "mismatch"
+    ):
+        if doi_resolved and title_sim < 0.7:
+            flags.append("doi_title_mismatch")
+        return {"status": "suspicious", "confidence": 0.35, "flags": flags}
 
     if doi_resolved:
         if not doi_had_metadata:
@@ -244,9 +245,10 @@ def verify_single_reference(ref: dict, options: VerifyOptions) -> dict:
     def note_failure(err: Exception) -> None:
         nonlocal failure, api_errored
         api_errored = True
-        if isinstance(err, LookupError):
-            if failure is None or (err.reason == "rate_limited" and failure[1] != "rate_limited"):
-                failure = (err.service, err.reason)
+        if isinstance(err, LookupError) and (
+            failure is None or (err.reason == "rate_limited" and failure[1] != "rate_limited")
+        ):
+            failure = (err.service, err.reason)
 
     authors = ref.get("authors") or []
     search_query = " ".join(x for x in [authors[0] if authors else "", ref.get("title") or ""] if x)

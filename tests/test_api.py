@@ -33,9 +33,7 @@ def test_analyse_returns_extracted_text_and_full_block():
 
 
 def test_analyse_rejects_unsupported_type():
-    resp = client.post(
-        "/analyse", files={"file": ("clip.mp4", b"xxxx", "video/mp4")}
-    )
+    resp = client.post("/analyse", files={"file": ("clip.mp4", b"xxxx", "video/mp4")})
     assert resp.status_code == 400
     assert "Unsupported file type" in resp.json()["detail"]
 

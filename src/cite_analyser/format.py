@@ -184,21 +184,23 @@ def _validate_chicago(ref: dict) -> list[FormatIssue]:
     raw = ref["raw"]
 
     # 1. Year in parentheses after volume/issue: "no. X (Year): pages".
-    if ref.get("year") and ref.get("journal"):
-        if not regex.search(r",\s*no\.\s*\d+\s*\(\d{4}\):", raw, regex.IGNORECASE):
-            issues.append(
-                {
-                    "field": "year",
-                    "message": (
-                        "Chicago journal citations should place the year in parentheses "
-                        'after the issue number: "no. X (Year): pages"'
-                    ),
-                    "expected": (
-                        f"no. {ref.get('issue') or 'X'} ({ref['year']}): "
-                        f"{ref.get('pages') or 'pages'}"
-                    ),
-                }
-            )
+    if (
+        ref.get("year")
+        and ref.get("journal")
+        and not regex.search(r",\s*no\.\s*\d+\s*\(\d{4}\):", raw, regex.IGNORECASE)
+    ):
+        issues.append(
+            {
+                "field": "year",
+                "message": (
+                    "Chicago journal citations should place the year in parentheses "
+                    'after the issue number: "no. X (Year): pages"'
+                ),
+                "expected": (
+                    f"no. {ref.get('issue') or 'X'} ({ref['year']}): {ref.get('pages') or 'pages'}"
+                ),
+            }
+        )
 
     # 2. Article titles quoted.
     if ref.get("title") and '"' not in raw and "\u201c" not in raw:

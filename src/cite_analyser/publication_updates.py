@@ -20,7 +20,7 @@ def check_publication_updates(
         fresh = False
         if checked_at:
             try:
-                when = datetime.datetime.fromisoformat(checked_at.replace("Z", "+00:00"))
+                when = datetime.datetime.fromisoformat(checked_at)
                 age = (datetime.datetime.now(datetime.UTC) - when).total_seconds()
                 fresh = age < 86_400
             except ValueError:

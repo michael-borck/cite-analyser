@@ -119,14 +119,12 @@ def near_matches(ref: ParsedRef, cite: InText) -> bool:
     ):
         return True
     # Surname exactly right, year one off — the classic year slip.
-    if (
+    return bool(
         year_off_by_one
         and len(ref_author) >= 3
         and len(cite_author) >= 3
         and any(s in _cited_surnames(cite["authors"]) for s in _cited_surnames(ref["authors"]))
-    ):
-        return True
-    return False
+    )
 
 
 def cross_reference_check(references: list[ParsedRef], in_text: list[InText]) -> dict:

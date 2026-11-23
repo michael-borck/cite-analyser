@@ -73,7 +73,7 @@ def _retry_after_seconds(value: str | None) -> float | None:
     except ValueError:
         pass
     try:
-        when = datetime.datetime.fromisoformat(value.replace("Z", "+00:00"))
+        when = datetime.datetime.fromisoformat(value)
         now = datetime.datetime.now(datetime.UTC)
         return min(max(0.0, (when - now).total_seconds()), MAX_RETRY_AFTER)
     except ValueError:
