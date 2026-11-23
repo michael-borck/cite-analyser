@@ -1,16 +1,23 @@
-"""The analysis pipeline (offline stages): extract → cross-reference →
-duplicates — the same order as cite-sight's pipeline.ts minus verification,
-which arrives with the verifier port."""
+"""The analysis pipeline: extract → cross-reference → duplicates → (optional)
+verification — the same order as cite-sight's pipeline.ts."""
 
 from __future__ import annotations
 
 from .cross_reference import cross_reference_check
 from .duplicates import find_duplicate_references
 from .extractor import extract_references
+from .verifier import VerifyOptions, verify_references
 
 
-def analyze(text: str) -> dict:
-    """Run the offline analysis stages over document text."""
+def analyze(
+    text: str,
+    verify: bool = False,
+    mailto: str | None = None,
+    check_urls: bool = True,
+    check_doi: bool = True,
+) -> dict:
+    """Run the analysis stages over document text. Verification (external
+    academic lookups) is opt-in."""
     extracted = extract_references(text)
     references = extracted["references"]
     in_text = extracted["inTextCitations"]
@@ -24,10 +31,16 @@ def analyze(text: str) -> dict:
     else:
         cross = cross_reference_check(references, in_text)
 
-    return {
+    result = {
         "references": references,
         "inTextCitations": in_text,
         "crossReference": cross,
         "duplicates": sorted(find_duplicate_references(references)),
         "sourceListLikely": source_list_likely,
     }
+    if verify:
+        result["verifications"] = verify_references(
+            references,
+            VerifyOptions(mailto=mailto, check_urls=check_urls, check_doi=check_doi),
+        )
+    return result

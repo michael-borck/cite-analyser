@@ -10,6 +10,7 @@ import sys
 from .analysis import analyze
 from .extractors import extract_document
 from .manifest import MANIFEST
+from .verifier import verify_references  # noqa: F401 — re-exported for library users
 
 
 def _read_text(path: pathlib.Path) -> str:
@@ -40,10 +41,14 @@ def main(argv: list[str] | None = None) -> int:
     p_analyse = sub.add_parser("analyse", help="Extract citations from a document")
     p_analyse.add_argument("file", type=pathlib.Path)
     p_analyse.add_argument("--json", action="store_true", dest="as_json")
+    p_analyse.add_argument(
+        "--verify", action="store_true", help="Verify references against academic databases"
+    )
+    p_analyse.add_argument("--email", help="Contact email for the Crossref polite pool (mailto)")
     args = parser.parse_args(argv)
 
     if args.command == "analyse":
-        result = analyze(_read_text(args.file))
+        result = analyze(_read_text(args.file), verify=args.verify, mailto=args.email)
         if args.as_json:
             print(json.dumps(result, indent=2, ensure_ascii=False))
         else:
@@ -61,6 +66,24 @@ def main(argv: list[str] | None = None) -> int:
             )
             if result["duplicates"]:
                 print(f"  duplicates at positions {result['duplicates']}")
+            verdicts = result.get("verifications") or []
+            if verdicts:
+                counts: dict[str, int] = {}
+                for v in verdicts:
+                    counts[v["status"]] = counts.get(v["status"], 0) + 1
+                print(
+                    "  verdicts: "
+                    + ", ".join(f"{k} {v}" for k, v in sorted(counts.items()))
+                )
+                for v in verdicts:
+                    if v["status"] in ("verified", "likely_valid"):
+                        continue
+                    who = (
+                        v["reference"]["authors"][0]
+                        if v["reference"].get("authors")
+                        else "?"
+                    )
+                    print(f"    {v['status']}: {who} — {', '.join(v['flags'])}")
             for i, r in enumerate(refs):
                 year = r.get("year") or "n.d."
                 dup = " (duplicate)" if i in result["duplicates"] else ""

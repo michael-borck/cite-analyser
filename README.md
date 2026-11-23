@@ -15,7 +15,10 @@ goldens recorded from the TS engine over its own `demo-corpus/`.
 | `references/extractor.ts` (section finding, splitting, parsers, in-text) | ✅ ported, conformance-gated |
 | `extractors/` (pdf, docx, text; limits; DOI repair) | ✅ ported, conformance-gated |
 | `references/crossReference.ts`, `duplicates.ts`, `matching.ts` | ✅ ported, conformance-gated |
-| `references/verifier` (Crossref, DataCite, OpenAlex, EuropePMC, arXiv, URL liveness) | ⏳ next |
+| `references/verifier.ts` verdict engine + `lookupError.ts` | ✅ ported (DOI/Crossref/DataCite cascade, corroboration, grey literature, degraded-lookup protection) |
+| `doiResolver.ts`, `crossref.ts`, `datacite.ts` | ✅ ported |
+| `openAlex.ts`, `semanticScholar.ts`, `arxiv.ts`, `europePmc.ts` search providers | ⏳ next (verifier has the seams) |
+| `urlChecker.ts`, `webSourceVerifier.ts` (ISBN/YouTube/OpenLibrary), `publicationUpdates.ts` | ⏳ next |
 | `formatValidator.ts` | ⏳ |
 | `claims/*` (local claim-evidence review) | ⏳ last, optional |
 
