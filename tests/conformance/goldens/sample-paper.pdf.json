@@ -1,0 +1,158 @@
+{
+  "references": [
+    {
+      "raw": "Borck, M. (2026). Conversation, Not Delegation. KDP.",
+      "authors": [
+        "Borck, M."
+      ],
+      "title": "Conversation, Not Delegation",
+      "year": 2026,
+      "journal": "KDP.",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Frontiers in Psychology. (2025). Optimizing academic engagement and mental health through AI: An experimental study on LLM integration in higher education. Frontiers in Psychology, 16. https://doi.org/10.3389/fpsyg.2025.1641212",
+      "authors": [
+        "Frontiers in Psychology."
+      ],
+      "title": "Optimizing academic engagement and mental health through AI: An experimental study on LLM integration in higher education",
+      "year": 2025,
+      "journal": "Frontiers in Psychology",
+      "doi": "10.3389/fpsyg.2025.1641212",
+      "url": "https://doi.org/10.3389/fpsyg.2025.1641212",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Kasneci, E., Sessler, K., KÃ¼chemann, S., Bannert, M., Dementieva, D., Fischer, F., â€¦ and Kasneci, G. (2023). ChatGPT for good? On opportunities and challenges of large language models for education. Learning and Individual Differences, 103, 102274. https://doi.org/10.1016/j.lindif.2023.102274",
+      "authors": [
+        "Kasneci, E.",
+        "Sessler, K., KÃ¼chemann, S.",
+        "Bannert, M.",
+        "Dementieva, D.",
+        "Fischer, F., â€¦",
+        "Kasneci, G."
+      ],
+      "title": "ChatGPT for good? On opportunities and challenges of large language models for education",
+      "year": 2023,
+      "journal": "Learning and Individual Differences",
+      "doi": "10.1016/j.lindif.2023.102274",
+      "url": "https://doi.org/10.1016/j.lindif.2023.102274",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Laurillard, D. (2002). Rethinking University Teaching: A Conversational Framework for the Effective Use of Learning Technologies (2nd ed.). RoutledgeFalmer.",
+      "authors": [
+        "Laurillard, D."
+      ],
+      "title": "Rethinking University Teaching: A Conversational Framework for the Effective Use of Learning Technologies",
+      "year": 2002,
+      "journal": "RoutledgeFalmer.",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Mollick, E. R., and Mollick, L. (2023). Assigning AI: Seven approaches for students, with prompts. The Wharton School Research Paper. https://ssrn.com/abstract=4475995",
+      "authors": [
+        "Mollick, E. R.",
+        "Mollick, L."
+      ],
+      "title": "Assigning AI: Seven approaches for students, with prompts",
+      "year": 2023,
+      "journal": "The Wharton School Research Paper",
+      "url": "https://ssrn.com/abstract=4475995",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "National Health and Medical Research Council. (2023). National Statement on Ethical Conduct in Human Research (2023 update). Australian Government.",
+      "authors": [
+        "National Health",
+        "Medical Research Council."
+      ],
+      "title": "National Statement on Ethical Conduct in Human Research (2023 update)",
+      "year": 2023,
+      "journal": "Australian Government.",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Stojanov, A., GrÃ¸nbÃ¦k, N., and Kulahci, M. (2024). Can we delegate learning to automation? A comparative study of LLM chatbots, search engines, and books. arXiv preprint. https://arxiv.org/ abs/2410.01396 Thaler, R. H., and Sunstein, C. R. (2008). Nudge: Improving Decisions About Health, Wealth, and Happiness. Yale University Press.",
+      "authors": [
+        "Stojanov, A., GrÃ¸nbÃ¦k, N.",
+        "Kulahci, M."
+      ],
+      "title": "Can we delegate learning to automation? A comparative study of LLM chatbots, search engines, and books. arXiv preprint. https://arxiv.org/ abs/2410.01396 Thaler, R",
+      "year": 2024,
+      "journal": "Yale University Press.",
+      "url": "https://arxiv.org/",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Vygotsky, L. S. (1978). Mind in Society: The Development of Higher Psychological Processes. Harvard University Press.",
+      "authors": [
+        "Vygotsky, L. S."
+      ],
+      "title": "Mind in Society: The Development of Higher Psychological Processes",
+      "year": 1978,
+      "journal": "Harvard University Press.",
+      "detectedStyle": "apa"
+    }
+  ],
+  "inTextCitations": [
+    {
+      "raw": "(Vygotsky, 1978)",
+      "authors": [
+        "Vygotsky"
+      ],
+      "year": 1978,
+      "position": 230
+    },
+    {
+      "raw": "(Kasneci et al., 2023)",
+      "authors": [
+        "Kasneci et al."
+      ],
+      "year": 2023,
+      "position": 292
+    },
+    {
+      "raw": "(Mollick and Mollick, 2023)",
+      "authors": [
+        "Mollick",
+        "Mollick"
+      ],
+      "year": 2023,
+      "position": 666
+    },
+    {
+      "raw": "(Stojanov et al., 2024)",
+      "authors": [
+        "Stojanov et al."
+      ],
+      "year": 2024,
+      "position": 1035
+    },
+    {
+      "raw": "(Thaler and Sunstein, 2008)",
+      "authors": [
+        "Thaler",
+        "Sunstein"
+      ],
+      "year": 2008,
+      "position": 1124
+    },
+    {
+      "raw": "(Borck, 2026)",
+      "authors": [
+        "Borck"
+      ],
+      "year": 2026,
+      "position": 2528
+    },
+    {
+      "raw": "Human Research (2023)",
+      "authors": [
+        "Human Research"
+      ],
+      "year": 2023,
+      "position": 2064
+    }
+  ]
+}

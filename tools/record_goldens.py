@@ -59,9 +59,13 @@ def main(repo: pathlib.Path) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
 
     for corpus in CORPUS_DIRS:
-        for doc in sorted((repo / corpus).glob("*.md")):
-            if doc.name.startswith("._"):
-                continue  # macOS AppleDouble sidecars on external volumes
+        docs = [
+            d
+            for d in sorted((repo / corpus).iterdir())
+            if d.suffix.lower() in {".md", ".txt", ".pdf", ".docx"}
+            and not d.name.startswith("._")  # macOS AppleDouble sidecars
+        ]
+        for doc in docs:
             proc = subprocess.run(
                 ["node", str(cli), "check", str(doc), "--offline", "--json"],
                 capture_output=True,
@@ -70,7 +74,7 @@ def main(repo: pathlib.Path) -> None:
                 cwd=repo,
             )
             golden = slim(json.loads(proc.stdout))
-            dest = out_dir / f"{doc.stem}.json"
+            dest = out_dir / f"{doc.name}.json"
             dest.write_text(json.dumps(golden, indent=2, ensure_ascii=False) + "\n")
             print(f"{doc.name}: {len(golden['references'])} refs -> {dest.name}")
 

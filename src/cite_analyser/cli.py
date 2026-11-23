@@ -5,25 +5,14 @@ from __future__ import annotations
 import argparse
 import json
 import pathlib
-import sys
 
 from .extractor import extract_references
+from .extractors import extract_document
 from .manifest import MANIFEST
-
-TEXT_SUFFIXES = {".txt", ".md", ".markdown"}
 
 
 def _read_text(path: pathlib.Path) -> str:
-    suffix = path.suffix.lower()
-    if suffix not in TEXT_SUFFIXES:
-        print(
-            f"Error: '{suffix}' text extraction arrives with the next milestone; "
-            "for now pass .txt/.md (the extractor itself is format-agnostic once "
-            "you have the text).",
-            file=sys.stderr,
-        )
-        sys.exit(1)
-    return path.read_text(encoding="utf-8", errors="replace")
+    return extract_document(path.read_bytes(), path.name)
 
 
 def main(argv: list[str] | None = None) -> int:
