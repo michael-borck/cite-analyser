@@ -1,0 +1,133 @@
+{
+  "references": [
+    {
+      "raw": "Harper, J., and Whitfield, S. (2023). Dropout dynamics in formative assessment analytics. *Journal of Educational Measurement and Innovation, 12*(3), 211–229.",
+      "authors": [
+        "Harper, J.",
+        "Whitfield, S."
+      ],
+      "title": "Dropout dynamics in formative assessment analytics",
+      "year": 2023,
+      "journal": "Journal of Educational Measurement and Innovation, 12",
+      "pages": "211–229",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Kasneci, E., Sessler, K., Küchemann, S., Bannert, M., Dementieva, D., Fischer, F., ... and Kasneci, G. (2023). ChatGPT for good? On opportunities and challenges of large language models for education. *Learning and Individual Differences, 103,* 102274. https://doi.org/10.1016/j.lindif.2023.102274",
+      "authors": [
+        "Kasneci, E.",
+        "Sessler, K.",
+        "Küchemann, S.",
+        "Bannert, M.",
+        "Dementieva, D.",
+        "Fischer, F., ...",
+        "Kasneci, G."
+      ],
+      "title": "ChatGPT for good? On opportunities and challenges of large language models for education",
+      "year": 2023,
+      "journal": "Learning and Individual Differences, 103,",
+      "doi": "10.1016/j.lindif.2023.102274",
+      "url": "https://doi.org/10.1016/j.lindif.2023.102274",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Selwyn, N. (2019). *Should Robots Replace Teachers? AI and the Future of Education.* Polity Press.",
+      "authors": [
+        "Selwyn, N."
+      ],
+      "title": "*Should Robots Replace Teachers? AI and the Future of Education.* Polity Press",
+      "year": 2019,
+      "journal": "Should Robots Replace Teachers? AI and the Future of Education.",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Stojanov, A., Grønbæk, N., and Kulahci, M. (2024). Can we delegate learning to automation? A comparative study of LLM chatbots, search engines, and books. *arXiv preprint.* https://arxiv.org/abs/2410.01396",
+      "authors": [
+        "Stojanov, A.",
+        "Grønbæk, N.",
+        "Kulahci, M."
+      ],
+      "title": "Can we delegate learning to automation? A comparative study of LLM chatbots, search engines, and books",
+      "year": 2024,
+      "journal": "arXiv preprint.",
+      "url": "https://arxiv.org/abs/2410.01396",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Thaler, R. H., and Sunstein, C. R. (2008). *Nudge: Improving Decisions About Health, Wealth, and Happiness.* Yale University Press.",
+      "authors": [
+        "Thaler, R. H.",
+        "Sunstein, C. R."
+      ],
+      "title": "*Nudge: Improving Decisions About Health, Wealth, and Happiness.* Yale University Press",
+      "year": 2008,
+      "journal": "Nudge: Improving Decisions About Health, Wealth, and Happiness.",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Vaswani, A., Shazeer, N., Parmar, N., et al. (2021). Attention is all you need. *Advances in Neural Information Processing Systems, 30.*",
+      "authors": [
+        "Vaswani, A.",
+        "Shazeer, N.",
+        "Parmar, N., et al."
+      ],
+      "title": "Attention is all you need",
+      "year": 2021,
+      "journal": "Advances in Neural Information Processing Systems, 30.",
+      "detectedStyle": "apa"
+    }
+  ],
+  "inTextCitations": [
+    {
+      "raw": "(Kasneci et al., 2023)",
+      "authors": [
+        "Kasneci et al."
+      ],
+      "year": 2023,
+      "position": 312
+    },
+    {
+      "raw": "(Thaler and Sunstein, 2008)",
+      "authors": [
+        "Thaler",
+        "Sunstein"
+      ],
+      "year": 2008,
+      "position": 797
+    },
+    {
+      "raw": "(Harper and Whitfield, 2023)",
+      "authors": [
+        "Harper",
+        "Whitfield"
+      ],
+      "year": 2023,
+      "position": 967
+    },
+    {
+      "raw": "(Vaswani et al., 2021)",
+      "authors": [
+        "Vaswani et al."
+      ],
+      "year": 2021,
+      "position": 1156
+    },
+    {
+      "raw": "(Stojanov et al., 2024)",
+      "authors": [
+        "Stojanov et al."
+      ],
+      "year": 2024,
+      "position": 1346
+    },
+    {
+      "raw": "Nguyen and Tran (2024)",
+      "authors": [
+        "Nguyen",
+        "Tran"
+      ],
+      "year": 2024,
+      "position": 1875
+    }
+  ]
+}
