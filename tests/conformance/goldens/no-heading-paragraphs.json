@@ -1,0 +1,56 @@
+{
+  "references": [
+    {
+      "raw": "Abrami, P. C., Bernard, R. M., & Borokhovski, E. (2015). Strategies for teaching students to think critically. Review of Educational Research, 85(2), 275–314.",
+      "authors": [
+        "Abrami, P. C.",
+        "Bernard, R. M.",
+        "Borokhovski, E."
+      ],
+      "title": "Strategies for teaching students to think critically",
+      "year": 2015,
+      "journal": "Review of Educational Research",
+      "volume": "85",
+      "issue": "2",
+      "pages": "275–314",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Buçinca, Z., Malaya, M. B., & Gajos, K. Z. (2021). To trust or to think: Cognitive forcing functions. Proceedings of the ACM, 5(CSCW1), 1–21.",
+      "authors": [
+        "Buçinca, Z.",
+        "Malaya, M. B.",
+        "Gajos, K. Z."
+      ],
+      "title": "To trust or to think: Cognitive forcing functions",
+      "year": 2021,
+      "journal": "Proceedings of the ACM",
+      "pages": "1–21",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Facione, P. A. (1990). Critical thinking: A statement of expert consensus. American Philosophical Association.",
+      "authors": [
+        "Facione, P. A."
+      ],
+      "title": "Critical thinking: A statement of expert consensus",
+      "year": 1990,
+      "journal": "American Philosophical Association.",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Kuhn, D. (1999). A developmental model of critical thinking. Educational Researcher, 28(2), 16–46.",
+      "authors": [
+        "Kuhn, D."
+      ],
+      "title": "A developmental model of critical thinking",
+      "year": 1999,
+      "journal": "Educational Researcher",
+      "volume": "28",
+      "issue": "2",
+      "pages": "16–46",
+      "detectedStyle": "apa"
+    }
+  ],
+  "inTextCitations": []
+}

@@ -1,0 +1,130 @@
+{
+  "references": [
+    {
+      "raw": "Kasneci, E., Sessler, K., Küchemann, S., Bannert, M., Dementieva, D., Fischer, F., ... and Kasneci, G. (2023). ChatGPT for good? On opportunities and challenges of large language models for education. *Learning and Individual Differences, 103,* 102274. https://doi.org/10.1016/j.lindif.2023.102274",
+      "authors": [
+        "Kasneci, E.",
+        "Sessler, K.",
+        "Küchemann, S.",
+        "Bannert, M.",
+        "Dementieva, D.",
+        "Fischer, F., ...",
+        "Kasneci, G."
+      ],
+      "title": "ChatGPT for good? On opportunities and challenges of large language models for education",
+      "year": 2023,
+      "journal": "Learning and Individual Differences, 103,",
+      "doi": "10.1016/j.lindif.2023.102274",
+      "url": "https://doi.org/10.1016/j.lindif.2023.102274",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Laurillard, D. (2002). *Rethinking University Teaching: A Conversational Framework for the Effective Use of Learning Technologies* (2nd ed.). RoutledgeFalmer.",
+      "authors": [
+        "Laurillard, D."
+      ],
+      "title": "*Rethinking University Teaching: A Conversational Framework for the Effective Use of Learning Technologies*",
+      "year": 2002,
+      "journal": "Rethinking University Teaching: A Conversational Framework for the Effective Use of Learning Technologies",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Mollick, E. R., and Mollick, L. (2023). Assigning AI: Seven approaches for students, with prompts. *The Wharton School Research Paper.* https://ssrn.com/abstract=4475995",
+      "authors": [
+        "Mollick, E. R.",
+        "Mollick, L."
+      ],
+      "title": "Assigning AI: Seven approaches for students, with prompts",
+      "year": 2023,
+      "journal": "The Wharton School Research Paper.",
+      "url": "https://ssrn.com/abstract=4475995",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Stojanov, A., Grønbæk, N., and Kulahci, M. (2024). Can we delegate learning to automation? A comparative study of LLM chatbots, search engines, and books. *arXiv preprint.* https://arxiv.org/abs/2410.01396",
+      "authors": [
+        "Stojanov, A.",
+        "Grønbæk, N.",
+        "Kulahci, M."
+      ],
+      "title": "Can we delegate learning to automation? A comparative study of LLM chatbots, search engines, and books",
+      "year": 2024,
+      "journal": "arXiv preprint.",
+      "url": "https://arxiv.org/abs/2410.01396",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Thaler, R. H., and Sunstein, C. R. (2008). *Nudge: Improving Decisions About Health, Wealth, and Happiness.* Yale University Press.",
+      "authors": [
+        "Thaler, R. H.",
+        "Sunstein, C. R."
+      ],
+      "title": "*Nudge: Improving Decisions About Health, Wealth, and Happiness.* Yale University Press",
+      "year": 2008,
+      "journal": "Nudge: Improving Decisions About Health, Wealth, and Happiness.",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Vygotsky, L. S. (1978). *Mind in Society: The Development of Higher Psychological Processes.* Harvard University Press.",
+      "authors": [
+        "Vygotsky, L. S."
+      ],
+      "title": "*Mind in Society: The Development of Higher Psychological Processes.* Harvard University Press",
+      "year": 1978,
+      "journal": "Mind in Society: The Development of Higher Psychological Processes.",
+      "detectedStyle": "apa"
+    }
+  ],
+  "inTextCitations": [
+    {
+      "raw": "(Kasneci et al., 2023)",
+      "authors": [
+        "Kasneci et al."
+      ],
+      "year": 2023,
+      "position": 128
+    },
+    {
+      "raw": "(Mollick and Mollick, 2023)",
+      "authors": [
+        "Mollick",
+        "Mollick"
+      ],
+      "year": 2023,
+      "position": 227
+    },
+    {
+      "raw": "(Laurillard, 2002)",
+      "authors": [
+        "Laurillard"
+      ],
+      "year": 2002,
+      "position": 315
+    },
+    {
+      "raw": "(Stojanov et al., 2024)",
+      "authors": [
+        "Stojanov et al."
+      ],
+      "year": 2024,
+      "position": 409
+    },
+    {
+      "raw": "(Thaler and Sunstein, 2008)",
+      "authors": [
+        "Thaler",
+        "Sunstein"
+      ],
+      "year": 2008,
+      "position": 485
+    },
+    {
+      "raw": "(Vygotsky, 1978)",
+      "authors": [
+        "Vygotsky"
+      ],
+      "year": 1978,
+      "position": 583
+    }
+  ]
+}

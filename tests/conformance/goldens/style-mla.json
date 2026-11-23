@@ -1,0 +1,89 @@
+{
+  "references": [
+    {
+      "raw": "Kasneci, Enkelejda, et al. \"ChatGPT for Good? On Opportunities and Challenges of Large Language Models for Education.\" *Learning and Individual Differences*, vol. 103, 2023, 102274.",
+      "authors": [
+        "Kasneci, Enkelejda, et al. \"ChatGPT for Good? On Opportunities",
+        "Challenges of Large Language Models for Education.\" *Learning",
+        "Individual Differences*, vol. 103"
+      ],
+      "title": "ChatGPT for Good? On Opportunities and Challenges of Large Language Models for Education",
+      "year": 2023,
+      "journal": "Learning and Individual Differences",
+      "detectedStyle": "mla"
+    },
+    {
+      "raw": "Laurillard, Diana. *Rethinking University Teaching: A Conversational Framework for the Effective Use of Learning Technologies.* 2nd ed., RoutledgeFalmer, 2002.",
+      "authors": [
+        "Laurillard, Diana. *Rethinking University Teaching: A Conversational Framework for the Effective Use of Learning Technologies.* 2nd ed., RoutledgeFalmer"
+      ],
+      "title": "",
+      "year": 2002,
+      "journal": "Rethinking University Teaching: A Conversational Framework for the Effective Use of Learning Technologies.",
+      "detectedStyle": "unknown"
+    },
+    {
+      "raw": "Mollick, Ethan R., and Lilach Mollick. \"Assigning AI: Seven Approaches for Students, with Prompts.\" *The Wharton School Research Paper*, 2023.",
+      "authors": [
+        "Mollick, Ethan R.",
+        "Lilach Mollick. \"Assigning AI: Seven Approaches for Students, with Prompts.\" *The Wharton School Research Paper*"
+      ],
+      "title": "Assigning AI: Seven Approaches for Students, with Prompts",
+      "year": 2023,
+      "journal": "The Wharton School Research Paper",
+      "detectedStyle": "unknown"
+    },
+    {
+      "raw": "Stojanov, Aleksandar, Nathalie Grønbæk, and Murat Kulahci. \"Can We Delegate Learning to Automation? A Comparative Study of LLM Chatbots, Search Engines, and Books.\" *arXiv Preprint*, 2024.",
+      "authors": [
+        "Stojanov, Aleksandar, Nathalie Grønbæk",
+        "Murat Kulahci. \"Can We Delegate Learning to Automation? A Comparative Study of LLM Chatbots, Search Engines",
+        "Books.\" *arXiv Preprint*"
+      ],
+      "title": "Can We Delegate Learning to Automation? A Comparative Study of LLM Chatbots, Search Engines, and Books",
+      "year": 2024,
+      "journal": "arXiv Preprint",
+      "detectedStyle": "mla"
+    },
+    {
+      "raw": "Thaler, Richard H., and Cass R. Sunstein. *Nudge: Improving Decisions About Health, Wealth, and Happiness.* Yale University Press, 2008.",
+      "authors": [
+        "Thaler, Richard H.",
+        "Cass R. Sunstein. *Nudge: Improving Decisions About Health, Wealth",
+        "Happiness.* Yale University Press"
+      ],
+      "title": "",
+      "year": 2008,
+      "journal": "Nudge: Improving Decisions About Health, Wealth, and Happiness.",
+      "detectedStyle": "unknown"
+    },
+    {
+      "raw": "Vygotsky, Lev S. *Mind in Society: The Development of Higher Psychological Processes.* Harvard University Press, 1978.",
+      "authors": [
+        "Vygotsky, Lev S. *Mind in Society: The Development of Higher Psychological Processes.* Harvard University Press"
+      ],
+      "title": "",
+      "year": 1978,
+      "journal": "Mind in Society: The Development of Higher Psychological Processes.",
+      "detectedStyle": "chicago"
+    }
+  ],
+  "inTextCitations": [
+    {
+      "raw": "(Laurillard 15)",
+      "authors": [
+        "Laurillard"
+      ],
+      "pageNumbers": "15",
+      "position": 312
+    },
+    {
+      "raw": "(Vygotsky 86)",
+      "authors": [
+        "Vygotsky"
+      ],
+      "pageNumbers": "86",
+      "position": 569
+    }
+  ]
+}

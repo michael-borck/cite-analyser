@@ -1,0 +1,47 @@
+{
+  "references": [
+    {
+      "raw": "Chan, C. K. Y., & Lee, K. K. W. (2023). The AI generation gap. Smart Learning Environments, 10, 1-23. https://doi.org/10.1186/s40561-023-00269-3",
+      "authors": [
+        "Chan, C. K. Y.",
+        "Lee, K. K. W."
+      ],
+      "title": "The AI generation gap",
+      "year": 2023,
+      "journal": "Smart Learning Environments",
+      "volume": "10",
+      "pages": "1-23",
+      "doi": "10.1186/s40561-023-00269-3",
+      "url": "https://doi.org/10.1186/s40561-023-00269-3",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Cong - Lem, N., & Tran, T. (2024). Academic integrity in the age of generative AI. Journal of University Teaching, 21(2), 45-60.",
+      "authors": [
+        "Cong - Lem, N.",
+        "Tran, T."
+      ],
+      "title": "Academic integrity in the age of generative AI",
+      "year": 2024,
+      "journal": "Journal of University Teaching",
+      "volume": "21",
+      "issue": "2",
+      "pages": "45-60",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Dempere, L. (2023). The emergence of ChatGPT. Journal of Applied Research, 8(1), 12-30.",
+      "authors": [
+        "Dempere, L."
+      ],
+      "title": "The emergence of ChatGPT",
+      "year": 2023,
+      "journal": "Journal of Applied Research",
+      "volume": "8",
+      "issue": "1",
+      "pages": "12-30",
+      "detectedStyle": "apa"
+    }
+  ],
+  "inTextCitations": []
+}

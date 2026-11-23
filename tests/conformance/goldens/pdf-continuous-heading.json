@@ -1,0 +1,61 @@
+{
+  "references": [
+    {
+      "raw": "Adiguzel, T., Kaya, M. H., & Cansu, F. K. (2023). Revolutionizing education with AI. Thinking Skills and Creativity, 47, 101356. https://doi.org/10.1016/j.tsc.2023.101356",
+      "authors": [
+        "Adiguzel, T.",
+        "Kaya, M. H.",
+        "Cansu, F. K."
+      ],
+      "title": "Revolutionizing education with AI",
+      "year": 2023,
+      "journal": "Thinking Skills and Creativity",
+      "doi": "10.1016/j.tsc.2023.101356",
+      "url": "https://doi.org/10.1016/j.tsc.2023.101356",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Baskara, R. (2023). Exploring the implications of ChatGPT for language learning. Journal of AI Education, 1(2), 1-15.",
+      "authors": [
+        "Baskara, R."
+      ],
+      "title": "Exploring the implications of ChatGPT for language learning",
+      "year": 2023,
+      "journal": "Journal of AI Education",
+      "volume": "1",
+      "issue": "2",
+      "pages": "1-15",
+      "detectedStyle": "apa"
+    },
+    {
+      "raw": "Nikolopoulou, K. (2024). Generative artificial intelligence in higher education. Education Sciences, 14(3), 297.",
+      "authors": [
+        "Nikolopoulou, K."
+      ],
+      "title": "Generative artificial intelligence in higher education",
+      "year": 2024,
+      "journal": "Education Sciences",
+      "volume": "14",
+      "issue": "3",
+      "detectedStyle": "apa"
+    }
+  ],
+  "inTextCitations": [
+    {
+      "raw": "(Adiguzel et al., 2023)",
+      "authors": [
+        "Adiguzel et al."
+      ],
+      "year": 2023,
+      "position": 26
+    },
+    {
+      "raw": "(Baskara, 2023)",
+      "authors": [
+        "Baskara"
+      ],
+      "year": 2023,
+      "position": 59
+    }
+  ]
+}

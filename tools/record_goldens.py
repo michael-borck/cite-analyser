@@ -60,6 +60,8 @@ def main(repo: pathlib.Path) -> None:
 
     for corpus in CORPUS_DIRS:
         for doc in sorted((repo / corpus).glob("*.md")):
+            if doc.name.startswith("._"):
+                continue  # macOS AppleDouble sidecars on external volumes
             proc = subprocess.run(
                 ["node", str(cli), "check", str(doc), "--offline", "--json"],
                 capture_output=True,

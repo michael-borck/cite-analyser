@@ -1,0 +1,56 @@
+{
+  "references": [
+    {
+      "raw": "- Acemoglu, D., & Restrepo, P. (2019). Automation. *Journal, 33*(2), 3–30.",
+      "authors": [
+        "Acemoglu, D.",
+        "Restrepo, P."
+      ],
+      "title": "Automation",
+      "year": 2019,
+      "journal": "Journal, 33",
+      "pages": "3–30",
+      "detectedStyle": "unknown"
+    },
+    {
+      "raw": "- Aoun, J. E. (2017). *Robot-proof.* MIT Press.",
+      "authors": [
+        "Aoun, J. E."
+      ],
+      "title": "*Robot-proof.* MIT Press",
+      "year": 2017,
+      "journal": "Robot-proof.",
+      "detectedStyle": "unknown"
+    },
+    {
+      "raw": "- Bloom, B. S. (1956). *Taxonomy of educational objectives.* McKay.",
+      "authors": [
+        "Bloom, B. S."
+      ],
+      "title": "*Taxonomy of educational objectives.* McKay",
+      "year": 1956,
+      "journal": "Taxonomy of educational objectives.",
+      "detectedStyle": "unknown"
+    },
+    {
+      "raw": "- Burns, M. (n.d.). *EdTech Essentials.*",
+      "authors": [
+        "Burns, M. (n.d.). *EdTech Essentials.*"
+      ],
+      "title": "",
+      "journal": "EdTech Essentials.",
+      "detectedStyle": "unknown"
+    },
+    {
+      "raw": "- Heaven, W. (2023, April 6). ChatGPT is going to change education. *MIT Tech Review.*",
+      "authors": [
+        "Heaven, W. (2023, April 6)"
+      ],
+      "title": ", April 6)",
+      "year": 2023,
+      "journal": "MIT Tech Review.",
+      "detectedStyle": "unknown"
+    }
+  ],
+  "inTextCitations": []
+}
