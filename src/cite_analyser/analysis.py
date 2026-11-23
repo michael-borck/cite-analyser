@@ -15,6 +15,8 @@ def analyze(
     mailto: str | None = None,
     check_urls: bool = True,
     check_doi: bool = True,
+    semantic_scholar_api_key: str | None = None,
+    openalex_api_key: str | None = None,
 ) -> dict:
     """Run the analysis stages over document text. Verification (external
     academic lookups) is opt-in."""
@@ -41,6 +43,12 @@ def analyze(
     if verify:
         result["verifications"] = verify_references(
             references,
-            VerifyOptions(mailto=mailto, check_urls=check_urls, check_doi=check_doi),
+            VerifyOptions(
+                mailto=mailto,
+                check_urls=check_urls,
+                check_doi=check_doi,
+                semantic_scholar_api_key=semantic_scholar_api_key,
+                openalex_api_key=openalex_api_key,
+            ),
         )
     return result

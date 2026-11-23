@@ -34,9 +34,9 @@ def reference_matches_citation(ref: ParsedRef, cite: InText) -> bool:
         return False
     if cite["year"] is not None and ref["year"] != cite["year"]:
         return False
-    if cite["year"] is not None and ref.get("yearSuffix", "") != cite.get("yearSuffix", ""):
-        return False
-    return True
+    return not (
+        cite["year"] is not None and ref.get("yearSuffix", "") != cite.get("yearSuffix", "")
+    )
 
 
 def within_edit_distance(a: str, b: str, max_edits: int) -> bool:

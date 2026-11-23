@@ -91,6 +91,18 @@ def test_title_similarity_exact_and_rescue():
 # --- verdict matrix ---------------------------------------------------------
 
 
+_PROVIDER_SEAMS = (
+    "resolve_doi",
+    "lookup_arxiv_id",
+    "search_crossref",
+    "search_openalex",
+    "search_semantic_scholar",
+    "search_arxiv",
+    "search_datacite",
+    "search_europe_pmc",
+)
+
+
 @pytest.fixture
 def no_network(monkeypatch):
     """Every provider call raises a rate-limit — the degraded-lookup world."""
@@ -98,12 +110,24 @@ def no_network(monkeypatch):
     def limited(*args, **kwargs):
         raise LookupError("crossref", "rate_limited")
 
-    monkeypatch.setattr(verifier, "resolve_doi", limited)
-    monkeypatch.setattr(verifier, "search_crossref", limited)
-    monkeypatch.setattr(verifier, "search_datacite", limited)
+    for seam in _PROVIDER_SEAMS:
+        monkeypatch.setattr(verifier, seam, limited)
 
 
 def _verify(reference, monkeypatch=None, search_results=None, doi_result=None):
+    """Verify with only the crossref/DOI seams populated; every other provider
+    answers empty so no test ever touches the network."""
+    monkeypatch.setattr(verifier, "resolve_doi", lambda *a, **k: None)
+    monkeypatch.setattr(verifier, "lookup_arxiv_id", lambda *a, **k: None)
+    for seam in (
+        "search_openalex",
+        "search_semantic_scholar",
+        "search_arxiv",
+        "search_datacite",
+        "search_europe_pmc",
+    ):
+        monkeypatch.setattr(verifier, seam, lambda *a, **k: [])
+    monkeypatch.setattr(verifier, "search_crossref", lambda *a, **k: [])
     if search_results is not None:
         monkeypatch.setattr(verifier, "search_crossref", lambda *a, **k: search_results)
     if doi_result is not None:
@@ -172,8 +196,14 @@ def test_degraded_lookup_never_accuses(monkeypatch):
     def limited(*args, **kwargs):
         raise LookupError("datacite", "rate_limited")
 
+    monkeypatch.setattr(verifier, "resolve_doi", lambda *a, **k: None)
+    monkeypatch.setattr(verifier, "lookup_arxiv_id", lambda *a, **k: None)
     monkeypatch.setattr(verifier, "search_crossref", weak_crossref)
+    monkeypatch.setattr(verifier, "search_openalex", lambda *a, **k: [])
+    monkeypatch.setattr(verifier, "search_semantic_scholar", lambda *a, **k: [])
+    monkeypatch.setattr(verifier, "search_arxiv", lambda *a, **k: [])
     monkeypatch.setattr(verifier, "search_datacite", limited)
+    monkeypatch.setattr(verifier, "search_europe_pmc", lambda *a, **k: [])
     v = verify_single_reference(ref(title="A Study", authors=["Unmatchable, U."]), VerifyOptions())
     assert v["status"] == "unverified"
     assert "degraded_lookup" in v["flags"]
@@ -191,12 +221,17 @@ def test_all_providers_rate_limited_no_match_is_unverified(no_network):
 def clean_empty_lookups(monkeypatch):
     """Every provider answers cleanly with no results — a genuine miss."""
 
-    def no_doi(*args, **kwargs):
-        return None
-
-    monkeypatch.setattr(verifier, "resolve_doi", no_doi)
-    monkeypatch.setattr(verifier, "search_crossref", lambda *a, **k: [])
-    monkeypatch.setattr(verifier, "search_datacite", lambda *a, **k: [])
+    for seam in ("resolve_doi", "lookup_arxiv_id"):
+        monkeypatch.setattr(verifier, seam, lambda *a, **k: None)
+    for seam in (
+        "search_crossref",
+        "search_openalex",
+        "search_semantic_scholar",
+        "search_arxiv",
+        "search_datacite",
+        "search_europe_pmc",
+    ):
+        monkeypatch.setattr(verifier, seam, lambda *a, **k: [])
 
 
 def test_grey_literature_not_found_without_accusation(clean_empty_lookups):

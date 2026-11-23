@@ -39,6 +39,8 @@ async def analyse(
     mailto: str = Form(default=""),
     checkUrls: bool = Form(default=True),
     checkDoi: bool = Form(default=True),
+    semanticScholarApiKey: str = Form(default=""),
+    openAlexApiKey: str = Form(default=""),
 ) -> dict[str, Any]:
     """Extract references and in-text citations; optionally verify them
     against external academic databases."""
@@ -54,5 +56,7 @@ async def analyse(
         mailto=mailto,
         check_urls=checkUrls,
         check_doi=checkDoi,
+        semantic_scholar_api_key=semanticScholarApiKey or None,
+        openalex_api_key=openAlexApiKey or None,
     )
     return {"fileName": name, **result}

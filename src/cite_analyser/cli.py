@@ -71,18 +71,11 @@ def main(argv: list[str] | None = None) -> int:
                 counts: dict[str, int] = {}
                 for v in verdicts:
                     counts[v["status"]] = counts.get(v["status"], 0) + 1
-                print(
-                    "  verdicts: "
-                    + ", ".join(f"{k} {v}" for k, v in sorted(counts.items()))
-                )
+                print("  verdicts: " + ", ".join(f"{k} {v}" for k, v in sorted(counts.items())))
                 for v in verdicts:
                     if v["status"] in ("verified", "likely_valid"):
                         continue
-                    who = (
-                        v["reference"]["authors"][0]
-                        if v["reference"].get("authors")
-                        else "?"
-                    )
+                    who = v["reference"]["authors"][0] if v["reference"].get("authors") else "?"
                     print(f"    {v['status']}: {who} — {', '.join(v['flags'])}")
             for i, r in enumerate(refs):
                 year = r.get("year") or "n.d."

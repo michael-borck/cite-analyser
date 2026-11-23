@@ -22,7 +22,18 @@ from .matching import (
     title_token_conflict,
     year_corroboration,
 )
-from .providers import clear_run_state, resolve_doi, search_crossref, search_datacite
+from .providers import (
+    clear_run_state,
+    extract_arxiv_id,
+    lookup_arxiv_id,
+    resolve_doi,
+    search_arxiv,
+    search_crossref,
+    search_datacite,
+    search_europe_pmc,
+    search_openalex,
+    search_semantic_scholar,
+)
 
 # Title-similarity bands.
 TITLE_FLOOR = 0.3
@@ -186,11 +197,15 @@ class VerifyOptions:
         mailto: str | None = None,
         check_urls: bool = True,
         check_doi: bool = True,
+        semantic_scholar_api_key: str | None = None,
+        openalex_api_key: str | None = None,
     ):
         self.offline = offline
         self.mailto = mailto
         self.check_urls = check_urls
         self.check_doi = check_doi
+        self.semantic_scholar_api_key = semantic_scholar_api_key
+        self.openalex_api_key = openalex_api_key
 
 
 def verify_single_reference(ref: dict, options: VerifyOptions) -> dict:
@@ -298,11 +313,33 @@ def verify_single_reference(ref: dict, options: VerifyOptions) -> dict:
         except Exception as e:  # noqa: BLE001
             note_failure(e)
 
+    # --- arXiv ID: authoritative for preprints (DataCite-registered, so the
+    # Crossref-first cascade cannot see them). ---
+    if not matched and ref.get("raw"):
+        arxiv_id = extract_arxiv_id(ref["raw"])
+        if arxiv_id:
+            try:
+                ark = lookup_arxiv_id(arxiv_id)
+                if (
+                    ark
+                    and title_similarity(ref.get("title") or "", ark.get("title") or "")
+                    >= TITLE_FLOOR
+                ):
+                    consider_results([ark])
+            except Exception as e:  # noqa: BLE001
+                note_failure(e)
+
     # --- Academic search cascade ---
     if not doi_resolved and not strong_match() and len(search_query) > 3:
         searches = [
             lambda: search_crossref(search_query, options.mailto),
+            lambda: search_openalex(search_query, options.mailto, options.openalex_api_key),
+            lambda: search_semantic_scholar(search_query, options.semantic_scholar_api_key),
+            # Last resorts: preprint-only works, then repository deposits and
+            # biomedical indexes.
+            lambda: search_arxiv(ref.get("title") or ""),
             lambda: search_datacite(ref.get("title") or "", options.mailto),
+            lambda: search_europe_pmc(ref.get("title") or ""),
         ]
         for search in searches:
             if strong_match():
@@ -316,13 +353,21 @@ def verify_single_reference(ref: dict, options: VerifyOptions) -> dict:
                 consider_results(search_crossref(ref["title"], options.mailto))
             except Exception as e:  # noqa: BLE001
                 note_failure(e)
+        # A typo in a distinctive word can zero out a full-title search; retry
+        # the two most reliable fuzzy providers with the stripped query.
         if not strong_match() and ref.get("title"):
             repaired = repaired_title_query(ref["title"])
             if repaired and repaired != normalize_title(ref["title"]):
-                try:
-                    consider_results(search_crossref(repaired, options.mailto))
-                except Exception as e:  # noqa: BLE001
-                    note_failure(e)
+                for search in (
+                    lambda: search_crossref(repaired, options.mailto),
+                    lambda: search_openalex(repaired, options.mailto, options.openalex_api_key),
+                ):
+                    if strong_match():
+                        break
+                    try:
+                        consider_results(search())
+                    except Exception as e:  # noqa: BLE001
+                        note_failure(e)
 
     # --- Verdict ---
     has_format_issues = bool(format_issues)
