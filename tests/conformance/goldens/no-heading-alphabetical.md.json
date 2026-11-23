@@ -52,5 +52,10 @@
       "detectedStyle": "unknown"
     }
   ],
-  "inTextCitations": []
+  "inTextCitations": [],
+  "crossReference": {
+    "unmatchedBibliography": [],
+    "unmatchedInText": [],
+    "nearMatches": []
+  }
 }

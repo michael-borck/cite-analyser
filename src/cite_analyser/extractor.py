@@ -13,6 +13,11 @@ from __future__ import annotations
 
 import regex
 
+# Payload shapes shared across modules (dicts, kept JSON-shaped to match the
+# TS engine's contract exactly).
+ParsedRef = dict
+InText = dict
+
 _RE_I = regex.IGNORECASE
 
 # ============================================================

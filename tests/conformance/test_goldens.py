@@ -18,7 +18,7 @@ import pathlib
 
 import pytest
 
-from cite_analyser.extractor import extract_references
+from cite_analyser.analysis import analyze
 from cite_analyser.extractors import extract_document
 
 CITE_SIGHT = pathlib.Path(__file__).resolve().parents[4] / "cite-sight"
@@ -51,6 +51,20 @@ def _slim(result: dict, keep_position: bool) -> dict:
     keep_cites = ["raw", "authors", "year", "yearSuffix", "pageNumbers"]
     if keep_position:
         keep_cites.append("position")
+    refs = result["references"]
+    cites = result["inTextCitations"]
+    cross = result.get("crossReference") or {}
+    slim_cross = {
+        "unmatchedBibliography": [refs[i]["raw"] for i in cross.get("unmatchedBibliography", [])],
+        "unmatchedInText": [cites[i]["raw"] for i in cross.get("unmatchedInText", [])],
+        "nearMatches": [
+            {
+                "cite": cites[p["citeIndex"]]["raw"],
+                "reference": refs[p["referenceIndex"]]["raw"],
+            }
+            for p in cross.get("nearMatches", [])
+        ],
+    }
     return {
         "references": [
             {k: r[k] for k in keep_refs if r.get(k) is not None} for r in result["references"]
@@ -58,6 +72,7 @@ def _slim(result: dict, keep_position: bool) -> dict:
         "inTextCitations": [
             {k: c[k] for k in keep_cites if c.get(k) is not None} for c in result["inTextCitations"]
         ],
+        "crossReference": slim_cross,
     }
 
 
@@ -68,10 +83,15 @@ def test_matches_ts_engine(golden_path: pathlib.Path):
         pytest.skip(f"corpus document not found: {doc}")
     golden = json.loads(golden_path.read_text())
     text = extract_document(doc.read_bytes(), doc.name)
-    actual = _slim(extract_references(text), doc.suffix.lower() in POSITION_EXACT_SUFFIXES)
+    keep_positions = doc.suffix.lower() in POSITION_EXACT_SUFFIXES
+    actual = _slim(analyze(text), keep_positions)
 
     assert actual["references"] == golden["references"], _first_diff(
         actual["references"], golden["references"], "references"
+    )
+    assert actual["crossReference"] == golden["crossReference"], (
+        f"crossReference differs:\n  actual: {actual['crossReference']}\n"
+        f"  golden: {golden['crossReference']}"
     )
     # positions were stripped for non-exact formats; compare citations as sets
     actual_cites = sorted(json.dumps(c, sort_keys=True) for c in actual["inTextCitations"])

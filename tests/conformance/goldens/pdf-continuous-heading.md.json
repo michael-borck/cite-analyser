@@ -57,5 +57,12 @@
       "year": 2023,
       "position": 59
     }
-  ]
+  ],
+  "crossReference": {
+    "unmatchedBibliography": [
+      "Nikolopoulou, K. (2024). Generative artificial intelligence in higher education. Education Sciences, 14(3), 297."
+    ],
+    "unmatchedInText": [],
+    "nearMatches": []
+  }
 }

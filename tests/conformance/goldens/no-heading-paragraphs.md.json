@@ -52,5 +52,10 @@
       "detectedStyle": "apa"
     }
   ],
-  "inTextCitations": []
+  "inTextCitations": [],
+  "crossReference": {
+    "unmatchedBibliography": [],
+    "unmatchedInText": [],
+    "nearMatches": []
+  }
 }

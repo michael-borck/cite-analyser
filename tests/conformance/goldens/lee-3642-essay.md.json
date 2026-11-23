@@ -129,5 +129,14 @@
       "year": 2024,
       "position": 1875
     }
-  ]
+  ],
+  "crossReference": {
+    "unmatchedBibliography": [
+      "Selwyn, N. (2019). *Should Robots Replace Teachers? AI and the Future of Education.* Polity Press."
+    ],
+    "unmatchedInText": [
+      "Nguyen and Tran (2024)"
+    ],
+    "nearMatches": []
+  }
 }

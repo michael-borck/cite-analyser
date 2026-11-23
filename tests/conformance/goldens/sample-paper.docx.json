@@ -167,5 +167,18 @@
       "year": 2023,
       "position": 2060
     }
-  ]
+  ],
+  "crossReference": {
+    "unmatchedBibliography": [
+      "Frontiers in Psychology. (2025). Optimizing academic engagement and mental health through AI: An experimental study on LLM integration in higher education. Frontiers in Psychology, 16. https://doi.org/10.3389/fpsyg.2025.1641212",
+      "Laurillard, D. (2002). Rethinking University Teaching: A Conversational Framework for the Effective Use of Learning Technologies (2nd ed.). RoutledgeFalmer."
+    ],
+    "unmatchedInText": [],
+    "nearMatches": [
+      {
+        "cite": "Human Research (2023)",
+        "reference": "National Health and Medical Research Council. (2023). National Statement on Ethical Conduct in Human Research (2023 update). Australian Government."
+      }
+    ]
+  }
 }

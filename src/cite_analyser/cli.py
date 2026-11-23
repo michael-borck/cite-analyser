@@ -5,14 +5,19 @@ from __future__ import annotations
 import argparse
 import json
 import pathlib
+import sys
 
-from .extractor import extract_references
+from .analysis import analyze
 from .extractors import extract_document
 from .manifest import MANIFEST
 
 
 def _read_text(path: pathlib.Path) -> str:
-    return extract_document(path.read_bytes(), path.name)
+    try:
+        return extract_document(path.read_bytes(), path.name)
+    except ValueError as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -38,17 +43,29 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.command == "analyse":
-        result = extract_references(_read_text(args.file))
+        result = analyze(_read_text(args.file))
         if args.as_json:
             print(json.dumps(result, indent=2, ensure_ascii=False))
         else:
             refs = result["references"]
+            cross = result["crossReference"]
             print(f"{len(refs)} references, {len(result['inTextCitations'])} in-text citations")
-            for r in refs:
-                year = r.get("year") or "n.d."
-                print(
-                    f"  [{r['detectedStyle']}] {r['authors'][0] if r['authors'] else '?'} ({year})"
+            print(
+                f"  unmatched: {len(cross['unmatchedBibliography'])} bibliography, "
+                f"{len(cross['unmatchedInText'])} in-text"
+                + (
+                    f", {len(cross['nearMatches'])} near matches"
+                    if cross.get("nearMatches")
+                    else ""
                 )
+            )
+            if result["duplicates"]:
+                print(f"  duplicates at positions {result['duplicates']}")
+            for i, r in enumerate(refs):
+                year = r.get("year") or "n.d."
+                dup = " (duplicate)" if i in result["duplicates"] else ""
+                author = r["authors"][0] if r["authors"] else "?"
+                print(f"  [{r['detectedStyle']}] {author} ({year}){dup}")
         return 0
     return 1
 

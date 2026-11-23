@@ -85,5 +85,15 @@
       "pageNumbers": "86",
       "position": 569
     }
-  ]
+  ],
+  "crossReference": {
+    "unmatchedBibliography": [
+      "Kasneci, Enkelejda, et al. \"ChatGPT for Good? On Opportunities and Challenges of Large Language Models for Education.\" *Learning and Individual Differences*, vol. 103, 2023, 102274.",
+      "Mollick, Ethan R., and Lilach Mollick. \"Assigning AI: Seven Approaches for Students, with Prompts.\" *The Wharton School Research Paper*, 2023.",
+      "Stojanov, Aleksandar, Nathalie Grønbæk, and Murat Kulahci. \"Can We Delegate Learning to Automation? A Comparative Study of LLM Chatbots, Search Engines, and Books.\" *arXiv Preprint*, 2024.",
+      "Thaler, Richard H., and Cass R. Sunstein. *Nudge: Improving Decisions About Health, Wealth, and Happiness.* Yale University Press, 2008."
+    ],
+    "unmatchedInText": [],
+    "nearMatches": []
+  }
 }

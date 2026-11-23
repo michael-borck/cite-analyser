@@ -7,7 +7,7 @@ from typing import Any
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from lens_contract import add_contract_routes, add_cors
 
-from .extractor import extract_references
+from .analysis import analyze
 from .extractors import extract_document
 from .manifest import MANIFEST
 
@@ -27,5 +27,5 @@ async def analyse(
         text = extract_document(raw, name)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
-    result = extract_references(text)
+    result = analyze(text)
     return {"fileName": name, **result}

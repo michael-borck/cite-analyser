@@ -39,6 +39,22 @@ KEEP = {
 
 def slim(result: dict) -> dict:
     refs_block = result.get("references", {})
+    cross = refs_block.get("crossReference") or {}
+
+    def cite_raw(c):
+        return c.get("raw")
+
+    def ref_raw(r):
+        return r.get("raw")
+
+    slimmed_cross = {
+        "unmatchedBibliography": [ref_raw(r) for r in cross.get("unmatchedBibliography", [])],
+        "unmatchedInText": [cite_raw(c) for c in cross.get("unmatchedInText", [])],
+        "nearMatches": [
+            {"cite": cite_raw(p["cite"]), "reference": ref_raw(p["reference"])}
+            for p in cross.get("nearMatches", [])
+        ],
+    }
     return {
         "references": [
             {k: r[k] for k in KEEP["references"] if r.get(k) is not None}
@@ -48,6 +64,7 @@ def slim(result: dict) -> dict:
             {k: c[k] for k in KEEP["inTextCitations"] if c.get(k) is not None}
             for c in refs_block.get("inTextCitations", [])
         ],
+        "crossReference": slimmed_cross,
     }
 
 
