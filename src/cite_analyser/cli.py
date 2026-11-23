@@ -8,7 +8,9 @@ import pathlib
 import sys
 
 from .analysis import analyze
+from .claims import SourceDocument, check_claims
 from .extractors import extract_document
+from .llm import chat
 from .manifest import MANIFEST
 from .verifier import verify_references  # noqa: F401 — re-exported for library users
 
@@ -45,6 +47,24 @@ def main(argv: list[str] | None = None) -> int:
         "--verify", action="store_true", help="Verify references against academic databases"
     )
     p_analyse.add_argument("--email", help="Contact email for the Crossref polite pool (mailto)")
+    p_claims = sub.add_parser(
+        "claims",
+        help=(
+            "Does your supplied source support this sentence? Checks each "
+            "citation-bearing sentence against the sources you provide."
+        ),
+    )
+    p_claims.add_argument("file", type=pathlib.Path, help="The document to check")
+    p_claims.add_argument(
+        "--sources",
+        type=pathlib.Path,
+        required=True,
+        help=(
+            'Source manifest JSON: {"sources": [{"reference": 1, "path": '
+            '"paper.pdf"}], "provider": {"base_url": "...", "model": "..."}}'
+        ),
+    )
+    p_claims.add_argument("--json", action="store_true", dest="as_json")
     args = parser.parse_args(argv)
 
     if args.command == "analyse":
@@ -82,6 +102,45 @@ def main(argv: list[str] | None = None) -> int:
                 dup = " (duplicate)" if i in result["duplicates"] else ""
                 author = r["authors"][0] if r["authors"] else "?"
                 print(f"  [{r['detectedStyle']}] {author} ({year}){dup}")
+        return 0
+
+    if args.command == "claims":
+        manifest = json.loads(args.sources.read_text())
+        provider = manifest.get("provider") or {}
+        sources = [
+            SourceDocument(
+                reference=int(entry["reference"]),
+                name=pathlib.Path(entry["path"]).name,
+                text=_read_text(pathlib.Path(entry["path"])),
+            )
+            for entry in manifest.get("sources") or []
+        ]
+        document_text = _read_text(args.file)
+        extraction = analyze(document_text)
+        result = check_claims(
+            document_text,
+            extraction["references"],
+            extraction["inTextCitations"],
+            sources,
+            lambda prompt: chat(
+                provider.get("base_url") or "http://localhost:11434/v1",
+                provider.get("model", ""),
+                prompt,
+                provider.get("api_key", ""),
+            ),
+        )
+        if args.as_json:
+            print(json.dumps(result, indent=2, ensure_ascii=False))
+        else:
+            print(result["question"])
+            for finding in result["findings"]:
+                print(f"  [{finding['status']}] {finding['claim'][:100]}")
+                if finding.get("reason"):
+                    print(f"      {finding['reason']}")
+                for evidence in finding.get("evidence") or []:
+                    print(f"      \u201c{evidence['quote'][:120]}\u201d")
+            print()
+            print(result["disclaimer"])
         return 0
     return 1
 

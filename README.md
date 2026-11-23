@@ -20,7 +20,7 @@ goldens recorded from the TS engine over its own `demo-corpus/`.
 | `openAlex.ts`, `semanticScholar.ts`, `arxiv.ts`, `europePmc.ts` search providers | ✅ ported (retries, daily-budget short-circuit, arXiv ID extraction + Atom parsing) |
 | `urlChecker.ts`, `webSourceVerifier.ts` (ISBN/YouTube/OpenLibrary/web metadata), `publicationUpdates.ts` | ✅ ported |
 | `formatValidator.ts` (APA/MLA/Chicago rules) | ✅ ported |
-| `claims/*` (local claim-evidence review) | ⏳ last, optional |
+| `claims/*` (claim–evidence review: *"Does your supplied source support this sentence?"*) | ✅ ported — provider-based (any OpenAI-compatible endpoint, e.g. Ollama), verbatim-quote validation, advisory; resumable runner/benchmark harnesses not ported |
 
 ## Install / use
 
@@ -28,7 +28,8 @@ goldens recorded from the TS engine over its own `demo-corpus/`.
 pip install cite-analyser
 
 cite-analyser analyse essay.md --json     # extract references + in-text citations
-cite-analyser serve --port 8006           # the family HTTP contract (POST /analyse)
+cite-analyser claims essay.md --sources manifest.json   # claim–evidence check
+cite-analyser serve --port 8006           # the family HTTP contract (POST /analyse, /claims)
 ```
 
 Python:
