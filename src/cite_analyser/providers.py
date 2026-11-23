@@ -218,7 +218,7 @@ def _crossref_item_to_work(item: dict) -> dict:
         work_type=item.get("type"),
         abstract=abstract,
         publication_updates=updates,
-    )
+    ) | {"publicationStatusCheckedAt": __import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat()}
 
 
 def search_crossref(query: str, mailto: str | None = None) -> list[dict]:

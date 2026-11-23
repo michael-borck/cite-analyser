@@ -18,8 +18,8 @@ goldens recorded from the TS engine over its own `demo-corpus/`.
 | `references/verifier.ts` verdict engine + `lookupError.ts` | ✅ ported (DOI/Crossref/DataCite cascade, corroboration, grey literature, degraded-lookup protection) |
 | `doiResolver.ts`, `crossref.ts`, `datacite.ts` | ✅ ported |
 | `openAlex.ts`, `semanticScholar.ts`, `arxiv.ts`, `europePmc.ts` search providers | ✅ ported (retries, daily-budget short-circuit, arXiv ID extraction + Atom parsing) |
-| `urlChecker.ts`, `webSourceVerifier.ts` (ISBN/YouTube/OpenLibrary), `publicationUpdates.ts` | ⏳ next |
-| `formatValidator.ts` | ⏳ |
+| `urlChecker.ts`, `webSourceVerifier.ts` (ISBN/YouTube/OpenLibrary/web metadata), `publicationUpdates.ts` | ✅ ported |
+| `formatValidator.ts` (APA/MLA/Chicago rules) | ✅ ported |
 | `claims/*` (local claim-evidence review) | ⏳ last, optional |
 
 ## Install / use

@@ -12,6 +12,7 @@ from __future__ import annotations
 import datetime
 
 from .duplicates import normalize_title
+from .format import validate_format
 from .lookup_error import LookupError
 from .matching import (
     author_corroboration,
@@ -34,6 +35,9 @@ from .providers import (
     search_openalex,
     search_semantic_scholar,
 )
+from .publication_updates import check_publication_updates
+from .url_checker import check_url
+from .web_sources import verify_web_source
 
 # Title-similarity bands.
 TITLE_FLOOR = 0.3
@@ -199,6 +203,7 @@ class VerifyOptions:
         check_doi: bool = True,
         semantic_scholar_api_key: str | None = None,
         openalex_api_key: str | None = None,
+        citation_style: str = "auto",
     ):
         self.offline = offline
         self.mailto = mailto
@@ -206,13 +211,17 @@ class VerifyOptions:
         self.check_doi = check_doi
         self.semantic_scholar_api_key = semantic_scholar_api_key
         self.openalex_api_key = openalex_api_key
+        self.citation_style = citation_style
 
 
 def verify_single_reference(ref: dict, options: VerifyOptions) -> dict:
     """Verify one reference through the cascade; returns the verification."""
-    # formatValidator arrives with its own milestone — the seam returns no
-    # issues until then (flagged in the README status table).
-    format_issues: list = []
+    effective_style = (
+        ref.get("detectedStyle", "unknown")
+        if options.citation_style == "auto"
+        else options.citation_style
+    )
+    format_issues: list = validate_format(ref, effective_style)
 
     if options.offline:
         return {
@@ -313,6 +322,24 @@ def verify_single_reference(ref: dict, options: VerifyOptions) -> dict:
         except Exception as e:  # noqa: BLE001
             note_failure(e)
 
+    # --- ISBN: resolve book references before general searches. ---
+    is_web_source = False
+    if not matched and ref.get("raw"):
+        try:
+            book = verify_web_source(ref, isbn_only=True)
+            if (
+                book
+                and author_corroboration(ref.get("authors") or [], book.get("authors") or [])
+                == "match"
+                and title_similarity(ref.get("title") or "", book.get("title") or "")
+                >= TITLE_MODERATE
+            ):
+                matched = book
+                similarity = title_similarity(ref.get("title") or "", book.get("title") or "")
+                is_web_source = True
+        except Exception as e:  # noqa: BLE001
+            note_failure(e)
+
     # --- arXiv ID: authoritative for preprints (DataCite-registered, so the
     # Crossref-first cascade cannot see them). ---
     if not matched and ref.get("raw"):
@@ -369,11 +396,62 @@ def verify_single_reference(ref: dict, options: VerifyOptions) -> dict:
                     except Exception as e:  # noqa: BLE001
                         note_failure(e)
 
+    # --- Web source (non-academic fallback) ---
+    if not doi_resolved and not strong_match() and (ref.get("url") or ref.get("raw")):
+        try:
+            web_result = verify_web_source(ref)
+            if web_result:
+                sim = (
+                    title_similarity(ref["title"], web_result.get("title") or "")
+                    if ref.get("title")
+                    else 0.0
+                )
+                # Main-title/subtitle containment: registries store only the
+                # main title ("Hooked") while citations carry the subtitle.
+                containment, smaller = title_containment(
+                    ref.get("title") or "", web_result.get("title") or ""
+                )
+                author_ok = (
+                    author_corroboration(ref.get("authors") or [], web_result.get("authors") or [])
+                    == "match"
+                )
+                containment_match = author_ok and smaller >= 1 and containment >= 0.8
+                if (sim >= TITLE_FLOOR or containment_match or not ref.get("title")) and (
+                    not matched
+                    or (author_ok and max(sim, 0.6 if containment_match else 0.0) > similarity)
+                ):
+                    matched = web_result
+                    similarity = max(sim, 0.6) if containment_match else sim
+                    is_web_source = True
+        except Exception as e:  # noqa: BLE001
+            note_failure(e)
+
+    # --- URL check ---
+    url_check = None
+    if ref.get("url") and options.check_urls:
+        url_check = check_url(ref["url"])
+
     # --- Verdict ---
     has_format_issues = bool(format_issues)
     flags = _compute_intrinsic_flags(ref, matched, has_format_issues)
 
-    if matched:
+    if is_web_source and matched:
+        # Non-academic sources get capped confidence — never 'verified'.
+        structured = matched.get("source") in ("youtube", "vimeo", "open_library")
+        max_conf = 0.75 if structured else 0.6
+        confidence = max_conf if similarity >= 0.5 else max_conf * 0.8
+        status = "likely_valid" if confidence >= 0.7 or similarity >= TITLE_FLOOR else "suspicious"
+        flags = [f for f in flags if f != "no_doi"]
+        flags.append("web_source")
+        author = author_corroboration(ref.get("authors") or [], matched.get("authors") or [])
+        if author == "mismatch":
+            flags.append("author_mismatch")
+        if title_token_conflict(ref.get("title") or "", matched.get("title") or ""):
+            flags.append("title_token_mismatch")
+        if author == "mismatch" or "title_token_mismatch" in flags or similarity < TITLE_MODERATE:
+            status = "suspicious"
+            confidence = 0.35
+    elif matched:
         assessment = _assess_academic_match(
             ref, matched, similarity, doi_resolved, doi_had_metadata
         )
@@ -400,14 +478,33 @@ def verify_single_reference(ref: dict, options: VerifyOptions) -> dict:
         status = "not_found"
         confidence = 0
 
-    if not doi_resolved and ambiguous():
+    if url_check and url_check.get("status") == "dead":
+        flags.append("broken_url")
+
+    if not doi_resolved and not is_web_source and ambiguous():
         flags.append("ambiguous_match")
         if status == "verified":
             status = "likely_valid"
         confidence = min(confidence, 0.65)
 
+    publication_check = None
+    if matched and not is_web_source:
+        publication_check = check_publication_updates(matched, options.mailto, options.check_doi)
+        if publication_check["status"] == "unavailable":
+            flags.append("publication_check_unavailable")
+        for update in publication_check.get("updates") or []:
+            kind = update.get("type")
+            if kind == "retraction":
+                flags.append("retraction_notice")
+            elif kind in ("correction", "erratum"):
+                flags.append("correction_notice")
+            elif kind == "expression-of-concern":
+                flags.append("expression_of_concern")
+            else:
+                flags.append("publication_update")
+
     unavailable = failure if status == "unverified" else None
-    return {
+    result = {
         "reference": ref,
         "status": status,
         "matchCategory": _categorize(status, flags, matched),
@@ -431,6 +528,11 @@ def verify_single_reference(ref: dict, options: VerifyOptions) -> dict:
         if unavailable
         else None,
     }
+    if url_check:
+        result["urlCheck"] = url_check
+    if publication_check:
+        result["publicationCheck"] = publication_check
+    return result
 
 
 def verify_references(refs: list[dict], options: VerifyOptions, on_verified=None) -> list[dict]:

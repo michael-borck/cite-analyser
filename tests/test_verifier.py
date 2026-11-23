@@ -100,7 +100,25 @@ _PROVIDER_SEAMS = (
     "search_arxiv",
     "search_datacite",
     "search_europe_pmc",
+    "verify_web_source",
+    "check_url",
+    "check_publication_updates",
 )
+
+
+def _silence_web(monkeypatch):
+    """URL checks, web-source lookups and notice checks answered locally."""
+    monkeypatch.setattr(verifier, "verify_web_source", lambda *a, **k: None)
+    monkeypatch.setattr(
+        verifier,
+        "check_url",
+        lambda url: {"url": url, "status": "blocked", "statusCode": 403},
+    )
+    monkeypatch.setattr(
+        verifier,
+        "check_publication_updates",
+        lambda *a, **k: {"status": "not_available", "updates": []},
+    )
 
 
 @pytest.fixture
@@ -110,8 +128,9 @@ def no_network(monkeypatch):
     def limited(*args, **kwargs):
         raise LookupError("crossref", "rate_limited")
 
-    for seam in _PROVIDER_SEAMS:
+    for seam in _PROVIDER_SEAMS[:8]:
         monkeypatch.setattr(verifier, seam, limited)
+    _silence_web(monkeypatch)
 
 
 def _verify(reference, monkeypatch=None, search_results=None, doi_result=None):
@@ -128,6 +147,7 @@ def _verify(reference, monkeypatch=None, search_results=None, doi_result=None):
     ):
         monkeypatch.setattr(verifier, seam, lambda *a, **k: [])
     monkeypatch.setattr(verifier, "search_crossref", lambda *a, **k: [])
+    _silence_web(monkeypatch)
     if search_results is not None:
         monkeypatch.setattr(verifier, "search_crossref", lambda *a, **k: search_results)
     if doi_result is not None:
@@ -204,6 +224,7 @@ def test_degraded_lookup_never_accuses(monkeypatch):
     monkeypatch.setattr(verifier, "search_arxiv", lambda *a, **k: [])
     monkeypatch.setattr(verifier, "search_datacite", limited)
     monkeypatch.setattr(verifier, "search_europe_pmc", lambda *a, **k: [])
+    _silence_web(monkeypatch)
     v = verify_single_reference(ref(title="A Study", authors=["Unmatchable, U."]), VerifyOptions())
     assert v["status"] == "unverified"
     assert "degraded_lookup" in v["flags"]
@@ -232,6 +253,7 @@ def clean_empty_lookups(monkeypatch):
         "search_europe_pmc",
     ):
         monkeypatch.setattr(verifier, seam, lambda *a, **k: [])
+    _silence_web(monkeypatch)
 
 
 def test_grey_literature_not_found_without_accusation(clean_empty_lookups):
