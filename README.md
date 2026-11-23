@@ -13,8 +13,9 @@ goldens recorded from the TS engine over its own `demo-corpus/`.
 | cite-sight module | Status |
 |---|---|
 | `references/extractor.ts` (section finding, splitting, parsers, in-text) | ✅ ported, conformance-gated |
-| `references/crossReference.ts`, `duplicates.ts` | ⏳ next |
-| `references/verifier` (Crossref, DataCite, OpenAlex, EuropePMC, arXiv, URL liveness) | ⏳ |
+| `extractors/` (pdf, docx, text; limits; DOI repair) | ✅ ported, conformance-gated |
+| `references/crossReference.ts`, `duplicates.ts`, `matching.ts` | ✅ ported, conformance-gated |
+| `references/verifier` (Crossref, DataCite, OpenAlex, EuropePMC, arXiv, URL liveness) | ⏳ next |
 | `formatValidator.ts` | ⏳ |
 | `claims/*` (local claim-evidence review) | ⏳ last, optional |
 
